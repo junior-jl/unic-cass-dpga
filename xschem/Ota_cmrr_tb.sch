@@ -16,11 +16,11 @@ N 1140 -890 1140 -870 {
 lab=out}
 N 1100 -1010 1190 -1010 {
 lab=#net1}
-N 650 -680 650 -640 {
+N 570 -680 570 -640 {
 lab=GND}
 N 740 -680 740 -640 {
 lab=GND}
-N 650 -770 650 -740 {
+N 570 -770 570 -740 {
 lab=in}
 N 740 -770 740 -740 {
 lab=ip}
@@ -74,20 +74,19 @@ lab=cmrr}
 N 730 -410 840 -410 {
 lab=cmrr}
 C {Ota_esq.sym} 1040 -890 0 0 {name=x1}
-C {vsource.sym} 740 -710 0 0 {name=Vip value="DC 0.9 AC 1.8"}
+C {vsource.sym} 740 -710 0 0 {name=Vip value="DC 0.9 AC 1"}
 C {vsource.sym} 1190 -980 0 0 {name=VDD value=1.8}
-C {isource.sym} 1020 -770 0 0 {name=I0 value=40u
+C {isource.sym} 1020 -770 0 0 {name=I0 value=15u
 }
 C {gnd.sym} 970 -730 0 0 {name=l1 lab=GND}
 C {gnd.sym} 1190 -930 0 0 {name=l2 lab=GND}
-C {gnd.sym} 650 -640 0 0 {name=l4 lab=GND}
+C {gnd.sym} 570 -640 0 0 {name=l4 lab=GND}
 C {gnd.sym} 1140 -780 0 0 {name=l5 lab=GND}
 C {lab_pin.sym} 1170 -890 2 0 {name=p8 sig_type=std_logic lab=out
 
 }
-C {vsource.sym} 650 -710 0 0 {name=Vin value=0.9}
 C {gnd.sym} 740 -640 0 0 {name=l3 lab=GND}
-C {lab_pin.sym} 650 -770 0 0 {name=p1 sig_type=std_logic lab=in
+C {lab_pin.sym} 570 -770 0 0 {name=p1 sig_type=std_logic lab=in
 
 }
 C {lab_pin.sym} 740 -770 0 0 {name=p2 sig_type=std_logic lab=ip
@@ -95,12 +94,7 @@ C {lab_pin.sym} 740 -770 0 0 {name=p2 sig_type=std_logic lab=ip
 C {lab_pin.sym} 850 -920 0 0 {name=p3 sig_type=std_logic lab=ip}
 C {lab_pin.sym} 850 -860 0 0 {name=p4 sig_type=std_logic lab=in
 }
-C {capa.sym} 1140 -840 0 0 {name=C1
-m=1
-value=1p
-footprint=1206
-device="ceramic capacitor"}
-C {devices/code.sym} 1790 -970 0 0 {name=TT_MODELS
+C {devices/code.sym} 1410 -950 0 0 {name=TT_MODELS
 only_toplevel=true
 format="tcleval( @value )"
 value="
@@ -109,7 +103,7 @@ value="
 
 "
 spice_ignore=false}
-C {devices/code_shown.sym} 1805 -730 0 0 {name=Simulation only_toplevel=false value="*cmd step stop
+C {devices/code_shown.sym} 1425 -730 0 0 {name=Simulation only_toplevel=false value="*cmd step stop
 
 .ac dec 2000 1 110Meg
 .save all
@@ -118,14 +112,22 @@ C {devices/code_shown.sym} 1805 -730 0 0 {name=Simulation only_toplevel=false va
 .control
 run
 *CMRR
-plot db((v(out)/v(ip))/(v(out2)/v(cmrr)))
-*Ganho ruido
-plot db(v(out2)/v(cmrr))
+let cmrr = db((v(out)/(v(ip)-v(in)))/(v(out2)/v(cmrr)))
+plot cmrr
+*plot db((v(out)/(v(ip)-v(in)))/(v(out2)/v(cmrr)))
+*Ganho de modo comum
+let mod_com = db(v(out2)/v(cmrr))
+plot mod_com
+*plot db(v(out2)/v(cmrr))
+*Ganho diferencial
+let mod_dif = db(v(out)/(v(ip)-v(in)))
+plot mod_dif
+*plot db(v(out)/(v(ip)-v(in)))
 .endc"}
 C {Ota_esq.sym} 1030 -440 0 0 {name=x2}
-C {vsource.sym} 730 -260 0 0 {name=Vcmrr value="DC 0.9 AC 1.8"}
+C {vsource.sym} 730 -260 0 0 {name=Vcmrr value="DC 0.9 AC 1"}
 C {vsource.sym} 1180 -530 0 0 {name=VDD2 value=1.8}
-C {isource.sym} 1010 -320 0 0 {name=I1 value=40u
+C {isource.sym} 1010 -320 0 0 {name=I1 value=15u
 }
 C {gnd.sym} 960 -280 0 0 {name=l6 lab=GND}
 C {gnd.sym} 1180 -480 0 0 {name=l7 lab=GND}
@@ -134,9 +136,15 @@ C {lab_pin.sym} 1160 -440 2 0 {name=p5 sig_type=std_logic lab=out2
 
 }
 C {gnd.sym} 730 -190 0 0 {name=l10 lab=GND}
-C {capa.sym} 1130 -390 0 0 {name=C2
+C {lab_pin.sym} 730 -470 0 0 {name=p6 sig_type=std_logic lab=cmrr}
+C {vsource.sym} 570 -710 0 0 {name=Vin value="DC 0.9 AC 1 180"}
+C {capa.sym} 1140 -840 0 0 {name=C1
 m=1
-value=1p
+value=4p
 footprint=1206
 device="ceramic capacitor"}
-C {lab_pin.sym} 730 -470 0 0 {name=p6 sig_type=std_logic lab=cmrr}
+C {capa.sym} 1130 -390 0 0 {name=C2
+m=1
+value=4p
+footprint=1206
+device="ceramic capacitor"}

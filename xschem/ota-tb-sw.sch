@@ -46,7 +46,7 @@ only_toplevel=true
 format="tcleval( @value )"
 value="
 ** opencircuitdesign pdks install
-.lib $::SKYWATER_MODELS/sky130.lib.spice tt_mm
+.lib $::SKYWATER_MODELS/sky130.lib.spice tt
 
 "
 spice_ignore=false}
@@ -58,13 +58,12 @@ C {devices/code_shown.sym} 540 200 0 0 {name=simulation only_toplevel=false valu
 
 .control
 save all
-tran 0.1m 2m
-plot in out
+tran 0.01m 1
+plot in out xlimit 0.5 0.50025
 .endc
 "}
 C {devices/gnd.sym} 180 70 0 0 {name=l7 lab=GND}
 C {devices/lab_pin.sym} 180 10 0 0 {name=p8 sig_type=std_logic lab=in}
-C {vsource.sym} 180 40 0 0 {name=V1 value="sin (0.9 1 1k)"}
 C {devices/capa.sym} 490 300 0 0 {name=Cl
 m=1
 value=4p
@@ -73,3 +72,4 @@ device="ceramic capacitor"}
 C {gnd.sym} 490 330 0 0 {name=l2 lab=GND}
 C {lab_pin.sym} 490 260 0 0 {name=p6 sig_type=std_logic lab=out}
 C {Ota_esq.sym} 430 220 0 0 {name=x1}
+C {sqwsource.sym} 180 40 0 0 {name=V1 vhi=1.8 freq=1}

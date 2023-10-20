@@ -39,9 +39,9 @@ lab=#net1}
 N 970 -1010 970 -950 {
 lab=#net1}
 C {Ota_esq.sym} 1040 -890 0 0 {name=x1}
-C {vsource.sym} 740 -710 0 0 {name=Vip value="DC 0.9 AC 1.8"}
+C {vsource.sym} 740 -710 0 0 {name=Vip value="DC 0.9 AC 1"}
 C {vsource.sym} 1190 -980 0 0 {name=VDD value=1.8}
-C {isource.sym} 1020 -770 0 0 {name=I0 value=40u
+C {isource.sym} 1020 -770 0 0 {name=I0 value=20u
 }
 C {gnd.sym} 970 -730 0 0 {name=l1 lab=GND}
 C {gnd.sym} 1190 -930 0 0 {name=l2 lab=GND}
@@ -62,7 +62,7 @@ C {lab_pin.sym} 850 -860 0 0 {name=p4 sig_type=std_logic lab=in
 }
 C {capa.sym} 1140 -840 0 0 {name=C1
 m=1
-value=1p
+value=4p
 footprint=1206
 device="ceramic capacitor"}
 C {devices/code.sym} 1350 -980 0 0 {name=TT_MODELS
@@ -83,7 +83,7 @@ C {devices/code_shown.sym} 1365 -740 0 0 {name=Simulation only_toplevel=false va
 .control
 run
 *Magnitude
-plot db(v(out)/v(ip)) 16.1269
+plot db(v(out)/v(ip)) 52
 *Fase em graus
-plot (ph(out)-ph(ip))*180/3.14159 1.0472*180/3.14159
+*plot (ph(out)-ph(ip))*180/3.14159 1.0472*180/3.14159
 .endc"}

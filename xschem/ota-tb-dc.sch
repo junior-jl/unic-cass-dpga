@@ -25,7 +25,6 @@ N -120 -30 -120 -20 {
 lab=in}
 N 100 -10 100 -0 {
 lab=out}
-C {/foss/designs/ota-edson/Ota_esq.sym} 20 -50 0 0 {name=x1}
 C {res.sym} -280 -120 0 0 {name=R1
 value=47k
 footprint=1206
@@ -51,7 +50,7 @@ C {devices/code_shown.sym} 150 -70 0 0 {name=simulation only_toplevel=false valu
 
 .control
 save all
-dc Vin 0 1.8 2.6u
+dc Vin 0 1.8 0.1
 plot in out
 .endc
 
@@ -65,7 +64,7 @@ value="
 
 "
 spice_ignore=false}
-C {isource.sym} 0 20 0 0 {name=I0 value=40u}
+C {isource.sym} 0 20 0 0 {name=I0 value=15u}
 C {gnd.sym} 0 50 0 0 {name=l5 lab=GND}
 C {lab_pin.sym} -120 -30 0 0 {name=p5 sig_type=std_logic lab=in}
 C {lab_pin.sym} -210 -260 0 0 {name=p6 sig_type=std_logic lab=in}
@@ -76,3 +75,4 @@ footprint=1206
 device="ceramic capacitor"}
 C {gnd.sym} 100 60 0 0 {name=l6 lab=GND}
 C {lab_pin.sym} 100 -10 0 0 {name=p7 sig_type=std_logic lab=out}
+C {Ota_esq.sym} 20 -50 0 0 {name=x1}

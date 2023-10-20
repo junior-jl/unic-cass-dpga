@@ -1,49 +1,32 @@
-** sch_path: /foss/designs/unic-cass-dpga/xschem/Ota_cmrr_tb.sch
-**.subckt Ota_cmrr_tb
-x1 net1 in ip out net2 GND Ota_esq
-Vip ip GND DC 0.9 AC 1
-.save i(vip)
-VDD net1 GND 1.8
+** sch_path: /foss/designs/unic-cass-dpga/xschem/ota_feedbacb_tb.sch
+**.subckt ota_feedbacb_tb
+Vdd vd GND 1.8
 .save i(vdd)
-I0 net2 GND 15u
-x2 net3 cmrr cmrr out2 net4 GND Ota_esq
-Vcmrr cmrr GND DC 0.9 AC 1
-.save i(vcmrr)
-VDD2 net3 GND 1.8
-.save i(vdd2)
-I1 net4 GND 15u
-Vin in GND DC 0.9 AC 1 180
-.save i(vin)
-C1 out GND 4p m=1
-C2 out2 GND 4p m=1
+I0 net3 GND 15u
+V1 in GND sin (0.9 0.2 1k)
+.save i(v1)
+Cl out GND 4p m=1
+x1 vd net2 net1 out net3 GND Ota_esq
+R3 out net2 100k m=1
+R4 net2 in 25k m=1
+Vdd1 net1 GND 0.9
+.save i(vdd1)
 **** begin user architecture code
 
 ** opencircuitdesign pdks install
-.lib /foss/pdks/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.lib /foss/pdks/sky130A/libs.tech/ngspice/sky130.lib.spice tt_mm
 
 
 
-*cmd step stop
 
-.ac dec 2000 1 110Meg
-.save all
-.end
+*.TRAN TSTEP TSTOP <TSTART <TMAX>> <UIC>
 
 .control
-run
-*CMRR
-let cmrr = db((v(out)/(v(ip)-v(in)))/(v(out2)/v(cmrr)))
-plot cmrr
-*plot db((v(out)/(v(ip)-v(in)))/(v(out2)/v(cmrr)))
-*Ganho de modo comum
-let mod_com = db(v(out2)/v(cmrr))
-plot mod_com
-*plot db(v(out2)/v(cmrr))
-*Ganho diferencial
-let mod_dif = db(v(out)/(v(ip)-v(in)))
-plot mod_dif
-*plot db(v(out)/(v(ip)-v(in)))
+save all
+tran 0.1m 2m
+plot in out
 .endc
+
 
 **** end user architecture code
 **.ends
