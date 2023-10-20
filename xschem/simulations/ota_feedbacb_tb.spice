@@ -1,6 +1,46 @@
+** sch_path: /foss/designs/unic-cass-dpga/xschem/ota_feedbacb_tb.sch
+**.subckt ota_feedbacb_tb
+Vdd vd GND 1.8
+.save i(vdd)
+I0 net3 GND 15u
+V1 in GND sin (0.9 0.2 1k)
+.save i(v1)
+Cl out GND 4p m=1
+x1 vd net2 net1 out net3 GND Ota_esq
+R3 out net2 100k m=1
+R4 net2 in 25k m=1
+Vdd1 net1 GND 0.9
+.save i(vdd1)
+**** begin user architecture code
+
+** opencircuitdesign pdks install
+.lib /foss/pdks/sky130A/libs.tech/ngspice/sky130.lib.spice tt_mm
+
+
+
+
+*.TRAN TSTEP TSTOP <TSTART <TMAX>> <UIC>
+
+.control
+save all
+tran 0.1m 2m
+plot in out
+.endc
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  Ota_esq.sym # of pins=6
+** sym_path: /foss/designs/unic-cass-dpga/xschem/Ota_esq.sym
 ** sch_path: /foss/designs/unic-cass-dpga/xschem/Ota_esq.sch
-.subckt Ota_esq Vin Vip VDD VSS Ibias Vout
-*.PININFO Vin:I Vip:I VDD:B VSS:B Ibias:B Vout:O
+.subckt Ota_esq VDD Vin Vip Vout Ibias VSS
+*.ipin Vin
+*.ipin Vip
+*.iopin VDD
+*.iopin VSS
+*.iopin Ibias
+*.opin Vout
 XM1 net1 Vin net3 net3 sky130_fd_pr__pfet_01v8 L=1 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
 + pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
 + sa=0 sb=0 sd=0 mult=1 m=1
@@ -27,4 +67,6 @@ XM7 Vout net2 VSS VSS sky130_fd_pr__nfet_01v8 L=1 W=21.509 nf=1 ad='int((nf+1)/2
 + sa=0 sb=0 sd=0 mult=1 m=1
 XC1 net2 Vout sky130_fd_pr__cap_mim_m3_1 W=23 L=23 MF=1 m=1
 .ends
+
+.GLOBAL GND
 .end
